@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	  <PackageId>saledev.UserManagement</PackageId>
+	  <Title>saledev.UserManagement</Title>
+	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	  <Authors>saledev</Authors>
+	  <Company>saledev</Company>
+	  <PackageProjectUrl>https://github.com/saledev/UserManagement</PackageProjectUrl>
+	  <Description>A simple package for UserManagement.</Description>
+	  <Summary>A simple package for UserManagement.</Summary>
+	  <RepositoryUrl>https://github.com/saledev/UserManagement</RepositoryUrl>
+	  <PackageTags>UserManagement</PackageTags>
+	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
+	  <PackageReleaseNotes>UserManagement library.</PackageReleaseNotes>
+	  <Version>1.0.0</Version>
+	  <PackageIcon>icon.png</PackageIcon>
+	  <PublishRepositoryUrl>true</PublishRepositoryUrl>
+	  <EmbedUntrackedSources>true</EmbedUntrackedSources>
+  </PropertyGroup>
+
+  <ItemGroup>
+	  <None Update="icon.png">
+		  <Pack>True</Pack>
+		  <PackagePath></PackagePath>
+		  <Visible>False</Visible>
+	  </None>
+  </ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="AutoMapper" Version="11.0.0" />
+		<PackageReference Include="FluentValidation" Version="10.3.6" />
+		<PackageReference Include="MediatR.Contracts" Version="1.0.1" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="6.0.2" />
+		<PackageReference Include="saledev.Result" Version="4.0.0" />
+		<PackageReference Include="saledev.Result.FluentValidation" Version="4.0.0" />
+		<PackageReference Include="saledev.SharedKernel" Version="1.0.0" />
+	</ItemGroup>
+	
+</Project>

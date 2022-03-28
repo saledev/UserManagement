@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="Mail.UserAdd.Body" xml:space="preserve">
+    <value>Vielen Dank für Ihre Anmeldung.
+	
+	Bitte bestätigen Sie Ihre E-Mail Adresse {{ User.Email }} indem Sie folgenden Link aufrufen:
+	
+	</value>
+  </data>
+</root>
