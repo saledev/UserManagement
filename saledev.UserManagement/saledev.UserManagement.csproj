@@ -39,6 +39,7 @@
 		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="6.0.2" />
+		<PackageReference Include="saledev.Authentication" Version="1.0.3" />
 		<PackageReference Include="saledev.Result" Version="4.0.0" />
 		<PackageReference Include="saledev.Result.FluentValidation" Version="4.0.0" />
 		<PackageReference Include="saledev.SharedKernel" Version="1.0.0" />
