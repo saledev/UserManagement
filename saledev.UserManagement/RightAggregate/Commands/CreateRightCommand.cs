@@ -4,7 +4,7 @@ using saledev.Result;
 using saledev.Result.FluentValidation;
 using saledev.SharedKernel.Interfaces;
 
-namespace saledev.UserManagement.RightAggregate.Commands;
+namespace saledev.UserManagement;
 
 public class CreateRightCommand : IRequest<Result<RightId>>
 {
