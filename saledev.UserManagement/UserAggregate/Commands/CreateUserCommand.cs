@@ -12,40 +12,41 @@ public class CreateUserCommand : IRequest<Result<Guid>>
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Result<Guid>>
     {
         private readonly IRepository<User> repository;
+        private readonly IRepository<Role> roleRepository;
         private readonly IValidator<User> validator;
 
-        public CreateUserCommandHandler(IRepository<User> repository, IValidator<User> validator)
+        public CreateUserCommandHandler(IRepository<User> repository, IRepository<Role> roleRepository, IValidator<User> validator)
         {
             this.repository = repository;
+            this.roleRepository = roleRepository;
             this.validator = validator;
         }
         public async Task<Result<Guid>> Handle(CreateUserCommand command, CancellationToken cancellationToken)
         {
-            var user = new User
+            var addEntity = new User
             {
                 Email = command.Email
             };
 
-            var validation = await validator.ValidateAsync(user);
+            var roles = await roleRepository.ListAsync(cancellationToken);
+            var defaultRole = roles.FirstOrDefault(x => x.IsDefaultRole);
+            if(defaultRole == null)
+            {
+                throw new Exception("No default role specified.");
+            }
+
+            addEntity.Roles = new List<Role> { defaultRole };
+
+            var validation = await validator.ValidateAsync(addEntity);
             if (!validation.IsValid)
             {
                 return Result<Guid>.Invalid(validation.AsErrors());
             }
 
-            if (user.Email == "abc@abc.de")
-            {
-                throw new InvalidOperationException("something went wrong.");
-            }
+            await repository.AddAsync(addEntity, cancellationToken);
+            await repository.SaveChangesAsync(cancellationToken);
 
-            if (user.Email == "abc2@abc.de")
-            {
-                throw new ApplicationException("something went wrong2.");
-            }
-
-            await repository.AddAsync(user);
-            await repository.SaveChangesAsync();
-
-            return new Result<Guid>(user.Id);
+            return new Result<Guid>(addEntity.Id);
         }
     }
 }

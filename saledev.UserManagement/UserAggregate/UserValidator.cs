@@ -10,5 +10,7 @@ public class UserValidator : AbstractValidator<User>
         RuleFor(x => x.Email).EmailAddress();
 
         RuleFor(x => x.Username).MaximumLength(100);
+
+        RuleFor(x => x.Roles).NotEmpty().WithMessage("User must have at least one role.");
     }
 }

@@ -10,8 +10,9 @@ public static class StartupSetup
     {
         services.AddAutoMapper(typeof(User).Assembly);
         services.AddMediatR(typeof(User).Assembly);
-        services.AddValidatorsFromAssemblyContaining<UserValidator>();
+        services.AddValidatorsFromAssemblyContaining<RoleValidator>();
         services.AddTransient<IUserService, UserService>();
+        services.AddTransient<IRightValidationService, RightValidationService>();
     }
 
 }
