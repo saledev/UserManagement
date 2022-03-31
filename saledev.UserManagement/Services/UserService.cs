@@ -29,4 +29,15 @@ public class UserService : IUserService
 
         return user;
     }
+
+    public async Task<User> GetByUsername(string username)
+    {
+        var user = await repository.GetBySpecAsync(new UserByUsernameOrEmailSpec(username));
+        if (user == null)
+        {
+            throw new ArgumentNullException(localizer["{0} not found by username {1}.", nameof(user), username]);
+        }
+
+        return user;
+    }
 }
