@@ -6,24 +6,23 @@ using saledev.Result.FluentValidation;
 
 namespace saledev.UserManagement;
 
-public class CreateUserCommand : IRequest<Result<Guid>>
+public class SignupUserCommand : IRequest<Result<Guid>>
 {
     public string Username { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
-    public List<Guid>? RoleIds { get; set; }
-    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Result<Guid>>
+    public class SignupUserCommandHandler : IRequestHandler<SignupUserCommand, Result<Guid>>
     {
         private readonly IRepository<User> repository;
         private readonly IRepository<Role> roleRepository;
         private readonly IValidator<User> validator;
 
-        public CreateUserCommandHandler(IRepository<User> repository, IRepository<Role> roleRepository, IValidator<User> validator)
+        public SignupUserCommandHandler(IRepository<User> repository, IRepository<Role> roleRepository, IValidator<User> validator)
         {
             this.repository = repository;
             this.roleRepository = roleRepository;
             this.validator = validator;
         }
-        public async Task<Result<Guid>> Handle(CreateUserCommand command, CancellationToken cancellationToken)
+        public async Task<Result<Guid>> Handle(SignupUserCommand command, CancellationToken cancellationToken)
         {
             var addEntity = new User
             {
@@ -31,22 +30,14 @@ public class CreateUserCommand : IRequest<Result<Guid>>
                 Email = command.Email
             };
 
-            if (command.RoleIds == null)
+            var roles = await roleRepository.ListAsync(cancellationToken);
+            var defaultRole = roles.FirstOrDefault(x => x.IsDefaultRole);
+            if(defaultRole == null)
             {
-                throw new ArgumentNullException("Please define at least one role for the new user.");
+                throw new Exception("No default role specified.");
             }
 
-            var rolesOnDb = await roleRepository.ListAsync();
-            var roles = new List<Role>();
-            foreach (var roleId in command.RoleIds)
-            {
-                var roleFound = rolesOnDb.FirstOrDefault(x => x.Id == roleId);
-                if (roleFound != null)
-                {
-                    roles.Add(roleFound);
-                }
-            }
-            addEntity.Roles = roles;
+            addEntity.Roles = new List<Role> { defaultRole };
 
             var validation = await validator.ValidateAsync(addEntity);
             if (!validation.IsValid)

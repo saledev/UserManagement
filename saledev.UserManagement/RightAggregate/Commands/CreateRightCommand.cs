@@ -8,6 +8,7 @@ namespace saledev.UserManagement;
 
 public class CreateRightCommand : IRequest<Result<RightId>>
 {
+    public string Id { get; set; } = string.Empty;
     public string Title { get; set; } = string.Empty;
     public class CreateRightCommandHandler : IRequestHandler<CreateRightCommand, Result<RightId>>
     {
