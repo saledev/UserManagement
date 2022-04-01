@@ -14,33 +14,60 @@ public class UserManagementDataSeeder : IUserManagementDataSeeder, IDataSeeder
 
     public async Task SeedData()
     {
-        var rightsForAdmin = new List<string>();
-
-        rightsForAdmin.Add((await mediator.Send(new CreateRightCommand()
+        var rightsForAdmin = new List<string>()
         {
-            Id = "User.Create",
-            Title = "User - Create"
-        })).Value.ToString());
+            "User.Create",
+            "User.Update",
+            "User.Delete",
+            "User.Read",
+
+            "Right.Create",
+            "Right.Update",
+            "Right.Delete",
+            "Right.Read",
+
+            "Role.Create",
+            "Role.Update",
+            "Role.Delete",
+            "Role.Read",
+        };
+
+        foreach (var right in rightsForAdmin)
+        {
+            await mediator.Send(new CreateRightCommand()
+            {
+                Id = right,
+                Title = right.Replace(".", " - ")
+            });
+        }
 
         var adminRoleId = (await mediator.Send(new CreateRoleCommand()
         {
             Title = "Admin",
+            RoleType = RoleType.Owner,
             IsDefaultRole = false,
             Rights = rightsForAdmin
         })).Value;
 
-        var rightsForMember = new List<string>();
-
-        rightsForMember.Add((await mediator.Send(new CreateRightCommand()
+        var rightsForMember = new List<string>()
         {
-            Id = "User.Self",
-            Title = "User - Self-Management"
-        })).Value.ToString());
+            "User.SelfManagement"
+        };
+
+        foreach (var right in rightsForMember)
+        {
+            await mediator.Send(new CreateRightCommand()
+            {
+                Id = right,
+                Title = right.Replace(".", " - ")
+            });
+        }
 
         var memberRoleId = (await mediator.Send(new CreateRoleCommand()
         {
             Title = "Member",
-            IsDefaultRole = false,
+            IsDefaultRole = true,
+            RoleType = RoleType.Customer,
             Rights = rightsForMember
         })).Value;
 

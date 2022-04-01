@@ -10,6 +10,7 @@ public class CreateRoleCommand : IRequest<Result<Guid>>
 {
     public string Title { get; set; } = string.Empty;
     public bool IsDefaultRole { get; set; }
+    public RoleType? RoleType { get; set; }
     public List<string>? Rights { get; set; }
 
     public class CreateRoleCommandHandler : IRequestHandler<CreateRoleCommand, Result<Guid>>
@@ -29,7 +30,8 @@ public class CreateRoleCommand : IRequest<Result<Guid>>
             var addEntity = new Role
             {
                 Title = command.Title,
-                IsDefaultRole = command.IsDefaultRole
+                IsDefaultRole = command.IsDefaultRole,
+                RoleType = command.RoleType ?? UserManagement.RoleType.Customer,
             };
 
             if (command.Rights != null && command.Rights.Any())
