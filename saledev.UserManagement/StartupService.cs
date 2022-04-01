@@ -13,6 +13,7 @@ public static class StartupSetup
         services.AddValidatorsFromAssemblyContaining<RoleValidator>();
         services.AddTransient<IUserService, UserService>();
         services.AddTransient<IRightValidationService, RightValidationService>();
+        services.AddTransient<IUserManagementDataSeeder, UserManagementDataSeeder>();
     }
 
 }
