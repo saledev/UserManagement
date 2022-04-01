@@ -24,6 +24,7 @@ public class CreateRightCommand : IRequest<Result<RightId>>
         {
             var addEntity = new Right
             {
+                Id = new RightId(command.Id),
                 Title = command.Title
             };
 
