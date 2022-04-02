@@ -8,4 +8,6 @@ public class Right : BaseEntity<RightId>, IAggregateRoot
 {
     [StringLength(255)]
     public string Title { get; set; } = string.Empty;
+
+    public ICollection<Role> Roles { get; set ; } = null!;
 }

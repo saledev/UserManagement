@@ -10,5 +10,5 @@ public class User : BaseEntity<Guid>, IAggregateRoot
     public string ApiKey { get; set; } = string.Empty;
     public string PasswordHash { get; set; } = string.Empty;
     public bool OptInPromotional { get; set; }
-    public List<Role> Roles { get; set; } = null!;
+    public ICollection<Role> Roles { get; set; } = null!;
 }

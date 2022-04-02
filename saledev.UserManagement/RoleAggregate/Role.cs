@@ -13,5 +13,6 @@ public class Role : BaseEntity<Guid>, IAggregateRoot
 
     public bool IsDefaultRole { get; set; }
 
-    public List<Right> Rights { get; set; } = null!;
+    public ICollection<Right> Rights { get; set; } = null!;
+    public ICollection<User> Users { get; set; } = null!;
 }
