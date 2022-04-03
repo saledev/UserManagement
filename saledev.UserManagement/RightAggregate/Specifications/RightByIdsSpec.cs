@@ -6,6 +6,12 @@ public class RightByIdsSpec : Specification<Right>
 {
     public RightByIdsSpec(List<string> rightIds)
     {
-        Query.Where(x => rightIds.Contains(x.Id.ToString()));
+        var rightIdsList = new List<RightId>();
+        foreach (string rightId in rightIds)
+        {
+            rightIdsList.Add(new RightId(rightId));
+        }
+
+        Query.Where(x => rightIdsList.Contains(x.Id));
     }
 }
