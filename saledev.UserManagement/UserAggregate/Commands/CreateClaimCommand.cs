@@ -30,8 +30,16 @@ public class CreateClaimCommand : IRequest<Result<string>>
             var claim = new Claim()
             {
                 UserId = foundUser.Id.ToString(),
-                Roles = new List<string> { "UserManagement" }
+                Roles = foundUser.Roles.Select(x => x.Id.ToString()).ToList(),
+                Rights = new List<string>()
             };
+
+            foreach (var role in foundUser.Roles)
+            {
+                var rightsAsString = role.Rights.Select(x => x.Id.ToString()).ToList();
+
+                claim.Rights.AddRange(rightsAsString);
+            }
 
             return new Result<string>(authenticationService.EncodeClaim(claim));
         }
